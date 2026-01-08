@@ -1,14 +1,42 @@
 #include <stdarg.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "main.h"
 
-/* print_number funksiyasının prototipi burada olmalıdır */
-int print_number(int n);
+/**
+ * print_number - tam ədədləri tək-tək simvol olaraq çap edir
+ * @n: çap ediləcək ədəd
+ * Return: çap edilən simvolların sayı
+ */
+int print_number(int n)
+{
+	unsigned int num;
+	int count = 0;
+
+	if (n < 0)
+	{
+		putchar('-');
+		count++;
+		num = -n;
+	}
+	else
+	{
+		num = n;
+	}
+
+	if (num / 10)
+		count += print_number(num / 10);
+
+	putchar((num % 10) + '0');
+	count++;
+
+	return (count);
+}
 
 /**
- * _printf - prints formatted output
- * @format: character string
- * Return: number of characters printed
+ * _printf - formatlı çap funksiyası (c, s, %, d, i dəstəkləyir)
+ * @format: format stringi
+ * Return: çap edilən simvolların ümumi sayı
  */
 int _printf(const char *format, ...)
 {
