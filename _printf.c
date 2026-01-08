@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include "main.h"
 
+/* print_number funksiyasının prototipi burada olmalıdır */
+int print_number(int n);
+
 /**
  * _printf - prints formatted output
  * @format: character string
@@ -32,7 +35,7 @@ int _printf(const char *format, ...)
 				str = va_arg(args, char *);
 				if (!str)
 					str = "(null)";
-				while (*str)
+				while (str && *str)
 				{
 					putchar(*str++);
 					count++;
@@ -42,6 +45,10 @@ int _printf(const char *format, ...)
 			{
 				putchar('%');
 				count++;
+			}
+			else if (*format == 'd' || *format == 'i')
+			{
+				count += print_number(va_arg(args, int));
 			}
 			else
 			{
